@@ -10,10 +10,16 @@ function Room:__init(x, y, w, h)
     self.w = w or 1
     self.h = h or 1
 
+    self.unitSize = math.max(self.w, self.h)
+
     self.navnodes = {}
     self.doors = {}
     self.leftNode = nil
     self.rightNode = nil
+end
+
+function Room:isAt(x, y)
+    return x >= self.x - self.w / 2 and x <= self.x + self.w / 2 and y >= self.y - self.h and y <= self.y
 end
 
 function Room:update(dt)
@@ -26,6 +32,10 @@ function Room:draw()
     -- room
     love.graphics.setColor(255, 255, 255)
     love.graphics.draw(resources.images.room, self.x, self.y, 0, 0.5 * self.w, 0.5 * self.h, 1, 2)
+    if self.selected then
+        love.graphics.setColor(0, 255, 0, 40 + 15 * math.abs(math.sin(self.group.time * 5)))
+        love.graphics.rectangle("fill", self.x - self.w / 2, self.y - self.h, self.w, self.h)
+    end
 
     -- foundation / roof
     love.graphics.setColor(10, 10, 10)

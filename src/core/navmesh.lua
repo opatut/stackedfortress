@@ -37,8 +37,7 @@ function NavNode:drawDebug()
 end
 
 function NavNode:distanceTo(other)
-    local dx, dy = self.x - other.x, self.y - other.y
-    return math.sqrt(dx * dx + dy * dy)
+    return dist(self.x, self.y, other.x, other.y)
 end
 
 -- path finding algorithm

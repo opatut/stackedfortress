@@ -19,6 +19,10 @@ function class(name, superclass)
 end
 ]]--
 
+function dist(x1, y1, x2, y2)
+    return math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+end
+
 function table.join(a, b)
     local tmp = {}
     for k, v in pairs(a) do

@@ -24,22 +24,35 @@ function World:update(dt)
     self.time = self.time + dt
 end
 
+function World:getZoom()
+    return math.min(love.graphics.getWidth(), love.graphics.getHeight()) / 20
+end
+
+function World:getOffset()
+    return love.graphics.getWidth() / 2, love.graphics.getHeight() * 4 / 5
+end
+
+function World:pushTransform()
+    love.graphics.push()
+    love.graphics.translate(self:getOffset())
+    love.graphics.scale(self:getZoom())
+end
+
+function World:popTransform()
+    love.graphics.pop()
+end
+
 function World:draw()
     love.graphics.setBackgroundColor(120, 160, 255) -- blue sky
 
     love.graphics.setColor(255, 255, 255)
     love.graphics.draw(resources.images.sky, 0, 0, 0, love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
 
-    -- do transformations
-    love.graphics.push()
-    love.graphics.translate(love.graphics.getWidth() / 2, love.graphics.getHeight() * 4 / 5)
-
-    self.zoom = math.min(love.graphics.getWidth(), love.graphics.getHeight()) / 20
-    love.graphics.scale(self.zoom)
+    self:pushTransform()
 
     -- draw ground
     love.graphics.setColor(166, 80, 43)
-    local w = love.graphics.getWidth() / self.zoom
+    local w = love.graphics.getWidth() / self:getZoom()
     love.graphics.rectangle("fill", -w / 2, 0, w, 5)
 
     ObjectGroup.draw(self)
@@ -49,6 +62,4 @@ function World:draw()
             node:drawDebug()
         end
     end
-
-    love.graphics.pop()
 end

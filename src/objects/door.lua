@@ -11,7 +11,6 @@ function Door:__init(roomA, roomB)
     self.y = roomA.y
     self.x = roomA.x + roomA.w / 2
     self.z = 0.5
-
 end
 
 function Door:update(dt)end

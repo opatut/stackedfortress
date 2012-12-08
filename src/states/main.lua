@@ -23,6 +23,8 @@ function MainState:__init()
         end)
 
     self.world = World()
+
+    self.selectedUnit = nil
 end
 
 function MainState:reset()
@@ -40,6 +42,8 @@ function MainState:draw()
     love.graphics.setBackgroundColor(0, 0, 0)
 
     self.world:draw()
+
+    self.world:popTransform()
 
     love.graphics.setColor(255, 255, 255)
     love.graphics.setFont(resources.fonts.default)
@@ -101,4 +105,41 @@ function MainState:keypressed(k, u)
             self.menu:previous()
         end
     end
+end
+
+function MainState:selectUnit(unit)
+    if unit == self.selectedUnit then return end
+
+    if self.selectedUnit then
+        if self.selectedUnit.onDeselect then 
+            self.selectedUnit:onDeselect()
+        end
+        self.selectedUnit.selected = false
+    end
+
+    self.selectedUnit = unit
+
+    if self.selectedUnit then
+        if self.selectedUnit.onSelect then 
+            self.selectedUnit:onSelect()
+        end
+        self.selectedUnit.selected = true
+    end
+end
+
+function MainState:mousepressed(x, y, button)
+    -- transform coordinates
+    local ox, oy = self.world:getOffset()
+    local scale = self.world:getZoom()
+    x = (x - ox) / scale
+    y = (y - oy) / scale
+
+    local u = nil
+    -- world.objects are sorted
+    for k, v in pairs(self.world.objects) do
+        if v.isAt and v:isAt(x, y) then
+            u = v
+        end
+    end
+    if u ~= self.selectedUnit then self:selectUnit(u) end
 end
