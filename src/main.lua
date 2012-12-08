@@ -31,7 +31,9 @@ function love.load()
 
     -- load fonts
     resources:addFont("title", "absender1.ttf", 80)
+    resources:addFont("subtitle", "absender1.ttf", 40)
     resources:addFont("default", "DejaVuSans.ttf", 20)
+    resources:addFont("small", "DejaVuSans.ttf", 14)
 
     -- load music
     -- resources:addMusic("fanfare", "fanfare.mp3")

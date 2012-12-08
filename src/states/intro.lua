@@ -36,10 +36,10 @@ function IntroState:draw()
     love.graphics.setBackgroundColor(a * (t - self.time) / t, a * (t - self.time) / t, a * (t - self.time) / t)
     love.graphics.setColor(255, 255, 255, c)
 
-    love.graphics.setFont(resources.fonts.default)
+    love.graphics.setFont(resources.fonts.small)
     local s = "Based on a concept by"
-    love.graphics.print(s, love.graphics.getWidth() / 2 - love.graphics.getFont():getWidth(s) / 2, love.graphics.getHeight() / 2 - 50)
-    love.graphics.setFont(resources.fonts.title)
+    love.graphics.print(s, love.graphics.getWidth() / 2 - love.graphics.getFont():getWidth(s) / 2, love.graphics.getHeight() / 2 - 30)
+    love.graphics.setFont(resources.fonts.subtitle)
     local s = "squidi.net"
     love.graphics.print(s, love.graphics.getWidth() / 2 - love.graphics.getFont():getWidth(s) / 2, love.graphics.getHeight() / 2)
 end
