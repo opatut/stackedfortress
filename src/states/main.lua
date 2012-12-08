@@ -58,14 +58,26 @@ end
 function MainState:stop()
 end
 
+function MainState:toggleMenu()
+    if self.running then
+        self.running = false
+        self.menu:show()
+    else
+        self.menu:hide(function() self.running = true end)
+    end
+end
+
 function MainState:keypressed(k, u)
     if k == "escape" then
-        if self.running then
-            self.running = false
-            self.menu:show()
+        if debug then
+            stack:pop()
         else
-            self.menu:hide(function() self.running = true end)
+            self:toggleMenu()
         end
+    end
+
+    if k == "p" then
+        self:toggleMenu()
     end
 
     if self.menu.shown then

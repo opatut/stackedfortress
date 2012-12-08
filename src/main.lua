@@ -9,15 +9,19 @@ settings = Settings()
 settings:load()
 stack = GameStack()
 
+debug = true
+
 function reset()
     -- start game
     menu = MenuState()
     main = MainState()
     intro = IntroState()
 
-    --stack:push(menu)
-    --stack:push(main)
-    stack:push(intro)
+    if debug then
+        stack:push(main)
+    else
+        stack:push(intro)
+    end
 end
 
 function love.load()
