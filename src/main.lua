@@ -3,11 +3,13 @@ require("core/resources")
 require("states/intro")
 require("states/menu")
 require("states/main")
+require("core/i18n")
 
 resources = Resources("data/")
 settings = Settings()
 settings:load()
 stack = GameStack()
+lang = Lang("de_DE")
 
 debug = true
 debugDraw = false

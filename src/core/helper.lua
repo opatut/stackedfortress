@@ -19,6 +19,17 @@ function class(name, superclass)
 end
 ]]--
 
+function table.join(a, b)
+    local tmp = {}
+    for k, v in pairs(a) do
+        table.insert(tmp, v)
+    end
+    for k, v in pairs(b) do
+        table.insert(tmp, v)
+    end
+    return tmp
+end 
+
 function table.getKey(tbl, val)
     for key, value in pairs(tbl) do
         if value == val then
@@ -40,6 +51,14 @@ function table.removeValue(tbl, val)
     return table.removeKey(tbl, key)
 end
 
+function table.containsKey(tbl, key)
+    return tbl[key] ~= nil
+end
+
+function table.containsValue(tbl, val)
+    return table.getKey(tbl, val) ~= -1
+end
+
 function class(name, super)
     -- main metadata
     local cls = {}
@@ -50,7 +69,7 @@ function class(name, super)
             cls[k] = v
         end
     end
-    
+
     cls.__name = name
     cls.__super = super
 

@@ -35,3 +35,55 @@ function NavNode:drawDebug()
     love.graphics.setColor(0, 255, 0)
     love.graphics.circle("fill", self.x, self.y, 0.1, 10)
 end
+
+function NavNode:distanceTo(other)
+    local dx, dy = self.x - other.x, self.y - other.y
+    return math.sqrt(dx * dx + dy * dy)
+end
+
+-- path finding algorithm
+-- returns (pathLength, {nextNode, intermediateNode1, ..., targetNode})
+function NavNode:findPath(target, visited)
+    print("Searching from ("..self.x.."|"..self.y..") to ("..target.x.."|"..target.y.."")
+    local visited = visited or {}
+
+    if self == target then
+        return {0, {self}}
+    end
+
+    if table.containsValue(self.connections, target) then
+        return {self:distanceTo(target), {target}}
+    end
+
+    -- find the best path, but don't come check any already visited node
+    local paths = {}
+    local forbidden = table.join(visited, self.connections)
+    for key, node in pairs(self.connections) do
+        -- don't visit any node twice
+        if not table.containsValue(visited, node) then
+            local path = node:findPath(target, forbidden)
+            if path[2][1] then
+                path[1] = path[1] + node:distanceTo(path[2][1])
+            end
+            path[2] = table.join({node}, path[2])
+            if path[1] ~= -1 then -- found a valid path
+                table.insert(paths, path)
+            end
+        end
+    end
+    
+    -- maybe there is no valid path...
+    if #paths == 0 then 
+        return {-1, {}}
+    end
+
+    -- sort by path length (shortest first)
+    table.sort(paths, function (a, b) return b[1] < a[1] end)
+
+    -- take the shortest path and return it, adding us as the first node and the distance to the
+    -- path's first node to the total path length
+    --local shortestDistance, shortestPath = paths[1][1], paths[1][2]
+    --local distance = shortestDistance + self:distanceTo(shortestPath[1])
+    --local finalPath = table.join({self}, shortestPath)
+    return paths[1] -- {distance, finalPath}
+end

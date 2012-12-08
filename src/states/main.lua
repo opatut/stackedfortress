@@ -80,6 +80,16 @@ function MainState:keypressed(k, u)
         self:toggleMenu()
     end
 
+    if k == "f" then 
+        -- take the first and last node and find the path
+        -- print the length
+        local path = self.world.navmesh[1]:findPath(self.world.navmesh[#self.world.navmesh])
+        print("Path of length", path[1], "over", #path[2], "nodes.")
+        for k, v in pairs(path[2]) do
+            print("Node: " .. v.x .. "|" .. v.y)
+        end
+    end
+
     if self.menu.shown then
         if k == " " or k == "return" or k == "enter" or k == "right" then
             self.menu:trigger()

@@ -10,7 +10,7 @@ function Stackling:__init()
 end
 
 function Stackling:update(dt)
-    self.x = self.x + dt
+    
 end
 
 function Stackling:draw()
