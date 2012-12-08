@@ -44,7 +44,6 @@ end
 -- path finding algorithm
 -- returns (pathLength, {nextNode, intermediateNode1, ..., targetNode})
 function NavNode:findPath(target, visited)
-    print("Searching from ("..self.x.."|"..self.y..") to ("..target.x.."|"..target.y.."")
     local visited = visited or {}
 
     if self == target then
@@ -62,11 +61,12 @@ function NavNode:findPath(target, visited)
         -- don't visit any node twice
         if not table.containsValue(visited, node) then
             local path = node:findPath(target, forbidden)
-            if path[2][1] then
-                path[1] = path[1] + node:distanceTo(path[2][1])
-            end
-            path[2] = table.join({node}, path[2])
             if path[1] ~= -1 then -- found a valid path
+                -- add the current node to the path
+                if path[2][1] then
+                    path[1] = path[1] + node:distanceTo(path[2][1])
+                end
+                path[2] = table.join({node}, path[2])
                 table.insert(paths, path)
             end
         end
@@ -80,10 +80,5 @@ function NavNode:findPath(target, visited)
     -- sort by path length (shortest first)
     table.sort(paths, function (a, b) return b[1] < a[1] end)
 
-    -- take the shortest path and return it, adding us as the first node and the distance to the
-    -- path's first node to the total path length
-    --local shortestDistance, shortestPath = paths[1][1], paths[1][2]
-    --local distance = shortestDistance + self:distanceTo(shortestPath[1])
-    --local finalPath = table.join({self}, shortestPath)
-    return paths[1] -- {distance, finalPath}
+    return paths[1]
 end
