@@ -79,8 +79,8 @@ function MainState:keypressed(k, u)
     end
 
     if k == "q" then
-        self:pop()
-        self:pop()
+        stack:pop()
+        stack:pop()
     end
 
     if k == "f" then 
