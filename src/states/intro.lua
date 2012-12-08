@@ -31,11 +31,17 @@ function IntroState:draw()
         c = 0
     end
 
-    love.graphics.setBackgroundColor(17, 17, 17)
+    local t = 3
+    local a = 100
+    love.graphics.setBackgroundColor(a * (t - self.time) / t, a * (t - self.time) / t, a * (t - self.time) / t)
     love.graphics.setColor(255, 255, 255, c)
 
-    local i = resources.images.logo
-    love.graphics.draw(i, love.graphics.getWidth() / 2 - i:getWidth() / 2, love.graphics.getHeight() / 2 - i:getHeight() / 2)
+    love.graphics.setFont(resources.fonts.default)
+    local s = "Based on a concept by"
+    love.graphics.print(s, love.graphics.getWidth() / 2 - love.graphics.getFont():getWidth(s) / 2, love.graphics.getHeight() / 2 - 50)
+    love.graphics.setFont(resources.fonts.title)
+    local s = "squidi.net"
+    love.graphics.print(s, love.graphics.getWidth() / 2 - love.graphics.getFont():getWidth(s) / 2, love.graphics.getHeight() / 2)
 end
 
 function IntroState:start()

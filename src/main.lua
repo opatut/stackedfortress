@@ -24,7 +24,6 @@ function love.load()
     math.randomseed(os.time())
 
     -- load images
-    resources:addImage("logo", "logo.png")
     resources:addImage("stackling", "stackling.png")
     resources:addImage("room", "room.png")
 
