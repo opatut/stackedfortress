@@ -22,7 +22,7 @@ The prototype will be written in Lua with Löve2D at first, and so will probably
 
 ## How to build/play
 
-On \*nix systems, you should do fine by installing Löve2D, then running `make` or the commands from the `Makefile` to compile and run the game. No idea how to do this properly on Windows ;) Go try yourself.
+On \*nix systems, you should do fine by installing Löve2D, then running `make` or the commands from the `Makefile` to compile and run the game. On Windows you will need to install Löve2D and execute the build.bat and the resulting game.
 
 ## License
 
@@ -36,6 +36,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 **Notice:** Not all files in this repository are part of this project and are being redistributed under their respective terms. This includes:
 
+- the 7-Zip binary, see [here](http://www.7-zip.org/license.txt) for the license
 - the DejaVu font files, see [here](http://dejavu-fonts.org/wiki/License) for the license
 - the Absender font file, created by [Nick Polifroni](http://www.remedy667.com/)
 - the Löve2D binary files and their dependencies under `lib/`, read `lib/license.txt` for more information
