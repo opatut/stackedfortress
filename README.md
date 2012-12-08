@@ -6,9 +6,10 @@ This is the implementation of [a game idea by squidi](http://www.squidi.net/thre
 
 The core team basically consist of
 
-- Sven-Hendrik 'svenstaro' Haase
-- Paul 'opatut' Bienkowski
 - Hans Ole Hatzel
+- Paul 'opatut' Bienkowski
+- Sven-Hendrik 'svenstaro' Haase
+- Tönjes 'thoenix' Peters
 
 but since this is open source, you may be part of it as well! Fork and code!
 
