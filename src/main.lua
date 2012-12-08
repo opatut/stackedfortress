@@ -68,19 +68,29 @@ function love.draw()
 end
 
 function love.keypressed(k, u)
-    stack:keypressed(k, u)
-
     if k == "d" and debug then
         debugDraw = not debugDraw
     end
 
     if k == "tab" and love.keyboard.isDown("lalt") then
         love.mouse.setGrab(false)
+        return
     end
+
+    stack:keypressed(k, u)
+end
+
+function love.keyreleased(k, u)
+    stack:keyreleased(k, u)
 end
 
 function love.mousepressed(x, y, button)
     love.mouse.setGrab(true)
+    stack:mousepressed(x, y, button)
+end
+
+function love.mousereleased(x, y, button)
+    stack:mousereleased(x, y, button)
 end
 
 function love.quit()

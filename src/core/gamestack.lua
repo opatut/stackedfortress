@@ -50,3 +50,15 @@ end
 function GameStack:keypressed(k, u)
     if self:current() then self:current():keypressed(k, u) end
 end
+
+function GameStack:keyreleased(k, u)
+   if self:current() then self:current():keyreleased(k, u) end 
+end
+
+function GameStack:mousepressed(x, y, button)
+   if self:current() then self:current():mousepressed(x, y, button) end 
+end
+
+function GameStack:mousereleased(x, y, button)
+   if self:current() then self:current():mousereleased(x, y, button) end 
+end
