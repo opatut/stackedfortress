@@ -31,3 +31,10 @@ This program is free software: you can redistribute it and/or modify it under th
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
+
+### Non-project files
+
+**Notice:** Not all files in this repository are part of this project and are being redistributed under their respective terms. This includes:
+
+- the DejaVu font files, see [here](http://dejavu-fonts.org/wiki/License) for the license
+- the Absender font file, created by [Nick Polifroni](http://www.remedy667.com/)
