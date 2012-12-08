@@ -13,7 +13,15 @@ function World:__init()
     self:add(Stackling())
     self:add(Room(0, 0, 2, 2))
     self:add(Room(2, 0, 2, 1))
-    self:add(Room(2, -1, 2, 1))
+    --self:add(Room(2, -1, 2, 1))
+
+    self.time = 0
+end
+
+function World:update(dt)
+    ObjectGroup.update(self, dt)
+
+    self.time = self.time + dt
 end
 
 function World:draw()

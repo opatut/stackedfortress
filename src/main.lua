@@ -9,7 +9,9 @@ resources = Resources("data/")
 settings = Settings()
 settings:load()
 stack = GameStack()
-lang = Lang("en_US")
+
+lang = Lang("de_DE")
+
 
 function _(key) return lang:_(key) end
 
