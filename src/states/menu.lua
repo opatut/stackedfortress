@@ -5,12 +5,14 @@ require("core/resources")
 require("core/settings")
 require("core/curves")
 require("core/menu")
+require("core/i18n")
 
 MenuState = class("MenuState", GameState)
 
+
 function MenuState:__init()
     self.time = 0
-    self.menu = Menu({"New Game", "Load Game", "Multiplayer", "Options", "Credits", "Exit"},
+    self.menu = Menu({_("newGame"), _("loadGame"), _("multiplayer"), _("options"), _("credits"), _("exit")},
         function(number, text)
             if number == 1 then
                 self.menu:hide(function()

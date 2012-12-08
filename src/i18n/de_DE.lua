@@ -3,11 +3,15 @@ l = {}
 -- ü=252, ä=228, ö=246, ß=223
 
 -- main menu
-l.play      = "Spielen"
-l.language  = "Sprache"
-l.stats     = "Statistik"
-l.about     = "Info"
-l.quit      = "Ende"
+l.fortress     = "Festung"
+l.stack        = "Stapel"
+
+l.newGame      = "Neues Spiel"
+l.loadGame     = "Spiel laden"
+l.multiplayer  = "Mehrspieler"
+l.options      = "Optionen"
+l.credits      = "Mitwirkende"
+l.exit         = "Beenden"
 
 l.your_task = "Deine Aufgame"
 l.your_tools= "Deine Tools"

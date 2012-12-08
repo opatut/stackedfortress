@@ -9,9 +9,13 @@ resources = Resources("data/")
 settings = Settings()
 settings:load()
 stack = GameStack()
+
 lang = Lang("de_DE")
 
-debug = true
+
+function _(key) return lang:_(key) end
+
+debug = false
 debugDraw = false
 
 function reset()
@@ -47,7 +51,6 @@ function love.load()
     -- resources:addMusic("fanfare", "fanfare.mp3")
 
     resources:load()
-
     reset()
 end
 
