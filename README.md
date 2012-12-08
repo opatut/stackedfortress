@@ -38,3 +38,4 @@ You should have received a copy of the GNU General Public License along with thi
 
 - the DejaVu font files, see [here](http://dejavu-fonts.org/wiki/License) for the license
 - the Absender font file, created by [Nick Polifroni](http://www.remedy667.com/)
+- the Löve2D binary files and their dependencies under `lib/`, read `lib/license.txt` for more information
