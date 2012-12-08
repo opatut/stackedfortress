@@ -9,7 +9,6 @@ require("core/i18n")
 
 MenuState = class("MenuState", GameState)
 
-
 function MenuState:__init()
     self.time = 0
     self.menu = Menu({_("newGame"), _("loadGame"), _("multiplayer"), _("options"), _("credits"), _("exit")},
