@@ -7,12 +7,18 @@ require("objects/world")
 MainState = class("MainState", GameState)
 
 function MainState:__init()
-    self.menu = Menu({"Continue", "Save", "Exit"},
+    self.menu = Menu({"Continue", "Save", "Exit to Menu", "Exit to Desktop"},
         function(number, text)
             if number == 1 then
-                self.menu:hide(function() self.running = true end)
+                self:toggleMenu()
             elseif number == 3 then
                 self.menu:hide(function() stack:pop() end)
+            elseif number == 4 then
+                if debug then 
+                    stack:pop() stack:pop()
+                else
+                    self.menu:hide(function() stack:pop() stack:pop() end)
+                end
             end
         end)
 
@@ -69,15 +75,12 @@ end
 
 function MainState:keypressed(k, u)
     if k == "escape" then
-        if debug then
-            stack:pop()
-        else
-            self:toggleMenu()
-        end
+        self:toggleMenu()
     end
 
-    if k == "p" then
-        self:toggleMenu()
+    if k == "q" then
+        self:pop()
+        self:pop()
     end
 
     if k == "f" then 

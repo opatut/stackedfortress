@@ -34,6 +34,7 @@ function Settings:save()
     for k,v in pairs(self.data) do
         local var = v
         if type(var) == "string" then var = "\"" .. var .. "\"" end -- escape strings
+        if type(var) == "boolean" then var = (var and "true" or "false") end -- translate booleans
         savefile:write("s['" .. k .. "'] = " .. var .. "\n")
     end
     savefile:write("return s\n")

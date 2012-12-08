@@ -12,10 +12,9 @@ stack = GameStack()
 
 lang = Lang("de_DE")
 
-
 function _(key) return lang:_(key) end
 
-debug = false
+debug = settings:get("debug", false)
 debugDraw = false
 
 function reset()
@@ -25,6 +24,7 @@ function reset()
     intro = IntroState()
 
     if debug then
+        stack:push(menu)
         stack:push(main)
     else
         stack:push(intro)
@@ -72,5 +72,6 @@ function love.keypressed(k, u)
 end
 
 function love.quit()
+    settings:set("debug", debug)
     settings:save()
 end

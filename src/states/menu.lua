@@ -26,10 +26,11 @@ function MenuState:__init()
             end
         end)
 
-    self.options = Menu({"Test 1", "Test 2", "Back"},
+    self.options = Menu({"Debug: " .. (debug and "on" or "off"), "Test 2", "Back"},
         function(number, text)
             if number == 1 then
-                self.options.entries[1] = "Test !"
+                debug = not debug
+                self.options.entries[1] = "Debug: " .. (debug and "on" or "off")
             elseif number == 3 then
                 self.options:hide(function() self.menu:show() end)
             end
