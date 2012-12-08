@@ -22,7 +22,7 @@ The prototype will be written in Lua with Löve2D at first, and so will probably
 
 ## How to build/play
 
-On \*nix systems, you should do fine by installing Löve2D, then running `make` or the commands from the `Makefile` to compile and run the game. On Windows you will need to install Löve2D and execute the build.bat and the resulting game.
+On \*nix systems, you should do fine by installing Löve2D, then running `make` or the commands from the `Makefile` to compile and run the game. On Windows you will need execute the build.bat and start the resulting game.
 
 ## License
 
