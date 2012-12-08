@@ -10,6 +10,7 @@ settings:load()
 stack = GameStack()
 
 debug = true
+debugDraw = false
 
 function reset()
     -- start game
@@ -29,9 +30,10 @@ function love.load()
 
     -- load images
     resources:addImage("stackling", "stackling.png")
-    resources:addImage("room", "room.png")
-
+    --resources:addImage("room", "room.png")
+    resources:makeGradientImage("room", {30, 30, 30}, {57, 57, 57})
     resources:makeGradientImage("sky", {220, 230, 255}, {120, 160, 255})
+    resources:makeGradientImage("door", {100, 100, 100}, {150, 150, 150}, true)
 
     -- load fonts
     resources:addFont("title", "absender1.ttf", 80)
@@ -58,6 +60,10 @@ end
 
 function love.keypressed(k, u)
     stack:keypressed(k, u)
+
+    if k == "d" and debug then
+        debugDraw = not debugDraw
+    end
 end
 
 function love.quit()

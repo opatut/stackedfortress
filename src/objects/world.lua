@@ -13,6 +13,7 @@ function World:__init()
     self:add(Stackling())
     self:add(Room(0, 0, 2, 2))
     self:add(Room(2, 0, 2, 1))
+    self:add(Room(2, -1, 2, 1))
 end
 
 function World:draw()
@@ -34,8 +35,10 @@ function World:draw()
 
     ObjectGroup.draw(self)
 
-    for i, node in pairs(self.navmesh) do
-        node:drawDebug()
+    if debugDraw then
+        for i, node in pairs(self.navmesh) do
+            node:drawDebug()
+        end
     end
 
     love.graphics.pop()
