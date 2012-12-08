@@ -8,6 +8,17 @@ function NavNode:__init(x, y)
     self.connections = {}
 end
 
+function NavNode:destroy()
+    for i, c in pairs(self.connections) do
+        self:disconnect(c)
+    end
+end
+
+function NavNode:disconnect(other)
+    table.removeValue(self.connections, other)
+    table.removeValue(other.connections, self)
+end 
+
 function NavNode:connect(other)
     table.insert(self.connections, other)
     table.insert(other.connections, self)

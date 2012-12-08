@@ -48,8 +48,8 @@ function love.load()
 end
 
 function love.update(dt)
-    if not stack:current() then love.event.push("quit") end
     stack:update(dt)
+    if not stack:current() then love.event.push("quit") end
 end
 
 function love.draw()

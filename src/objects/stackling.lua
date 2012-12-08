@@ -6,6 +6,7 @@ function Stackling:__init()
     Object.__init(self)
     self.team = {}
     self.team.color = {255, 0, 0}
+    self.z = 1
 end
 
 function Stackling:update(dt)

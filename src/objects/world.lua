@@ -1,38 +1,18 @@
-require("core/object")
+require("core/objectgroup")
+require("core/navmesh")
 require("objects/stackling")
 require("objects/room")
-require("core/navmesh")
 
-World = class("World", Object)
+World = class("World", ObjectGroup)
 
 function World:__init()
-    self.rooms = {}
-    self.objects = {}
+    ObjectGroup.__init(self)
 
-    table.insert(self.objects, Stackling())
-    table.insert(self.rooms, Room(0, 0, 2, 2))
+    self.navmesh = {}
 
-    local n1 = NavNode(2, -1)
-    local n2 = NavNode(3, -1)
-    local n3 = NavNode(2, -2)
-    local n4 = NavNode(0, -2)
-
-    n1:connect(n2)
-    n2:connect(n3)
-    n1:connect(n3)
-    n4:connect(n3)
-
-    self.navmesh = {n1, n2, n3, n4}
-end
-
-function World:update(dt)
-    for i, room in pairs(self.rooms) do
-        room:update(dt)
-    end
-
-    for i, object in pairs(self.objects) do
-        object:update(dt)
-    end
+    self:add(Stackling())
+    self:add(Room(0, 0, 2, 2))
+    self:add(Room(2, 0, 2, 1))
 end
 
 function World:draw()
@@ -52,13 +32,7 @@ function World:draw()
     local w = love.graphics.getWidth() / self.zoom
     love.graphics.rectangle("fill", -w / 2, 0, w, 5)
 
-    for i, room in pairs(self.rooms) do
-        room:draw()
-    end
-
-    for i, object in pairs(self.objects) do
-        object:draw()
-    end
+    ObjectGroup.draw(self)
 
     for i, node in pairs(self.navmesh) do
         node:drawDebug()
