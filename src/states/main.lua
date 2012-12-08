@@ -95,6 +95,9 @@ function MainState:keypressed(k, u)
             print("Node: " .. v.x .. "|" .. v.y)
         end
     end
+    if k == "b" then
+        buildmode = not buildmode
+    end
 
     if self.menu.shown then
         if k == " " or k == "return" or k == "enter" or k == "right" then
