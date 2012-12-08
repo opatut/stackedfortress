@@ -27,6 +27,7 @@ end
 function World:draw()
     love.graphics.setBackgroundColor(120, 160, 255) -- blue sky
 
+    love.graphics.setColor(255, 255, 255)
     love.graphics.draw(resources.images.sky, 0, 0, 0, love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
 
     -- do transformations
@@ -36,7 +37,7 @@ function World:draw()
     self.zoom = math.min(love.graphics.getWidth(), love.graphics.getHeight()) / 20
     love.graphics.scale(self.zoom)
 
-    -- draw groundquaputisches
+    -- draw ground
     love.graphics.setColor(166, 80, 43)
     local w = love.graphics.getWidth() / self.zoom
     love.graphics.rectangle("fill", -w / 2, 0, w, 5)

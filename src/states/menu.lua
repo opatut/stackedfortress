@@ -22,7 +22,7 @@ function MenuState:__init()
             elseif number == 4 then
                 self.menu:hide(function() self.options:show() end)
             elseif number == 6 then
-                self.menu:hide(function() stack:pop() stack:pop() end)
+                self.menu:hide(function() stack:quit() end)
             end
         end)
 
