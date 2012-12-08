@@ -16,6 +16,8 @@ function World:__init()
     --self:add(Room(2, -1, 2, 1))
 
     self.time = 0
+    self.centerX = 0
+    self.centerY = 0
 end
 
 function World:update(dt)
@@ -29,7 +31,20 @@ function World:getZoom()
 end
 
 function World:getOffset()
-    return love.graphics.getWidth() / 2, love.graphics.getHeight() * 4 / 5
+    return 
+        love.graphics.getWidth() / 2      - self.centerX * self:getZoom(), 
+        love.graphics.getHeight() * 4 / 5 - self.centerY * self:getZoom()
+end
+
+function World:screenToWorld(x, y)
+    local ox, oy = self:getOffset()
+    local scale = self:getZoom()
+    return (x - ox) / scale, (y - oy) / scale
+end
+
+function World:shift(x, y)
+    self.centerX = self.centerX + x
+    self.centerY = self.centerY + y    
 end
 
 function World:pushTransform()

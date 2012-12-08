@@ -36,6 +36,15 @@ function MainState:update(dt)
     if self.running then
         self.world:update(dt)
     end
+
+    -- shifting around the world
+    local x, y = love.mouse.getPosition()
+    local b = 10
+    local speed = 5 * dt
+    if x < b then self.world:shift(-speed, 0) end
+    if x > love.graphics.getWidth()  - b then self.world:shift(speed, 0) end
+    if y < b then self.world:shift(0, -speed) end
+    if y > love.graphics.getHeight()  - b then self.world:shift(0, speed) end
 end
 
 function MainState:draw()
@@ -132,17 +141,17 @@ end
 
 function MainState:mousepressed(x, y, button)
     -- transform coordinates
-    local ox, oy = self.world:getOffset()
-    local scale = self.world:getZoom()
-    x = (x - ox) / scale
-    y = (y - oy) / scale
+    local wX, wY = self.world:screenToWorld(x, y)
 
-    local u = nil
-    -- world.objects are sorted
-    for k, v in pairs(self.world.objects) do
-        if v.isAt and v:isAt(x, y) then
-            u = v
+    -- Unit selection
+    if button == "l" then
+        local u = nil
+        -- world.objects are sorted
+        for k, v in pairs(self.world.objects) do
+            if v.isAt and v:isAt(wX, wY) then
+                u = v
+            end
         end
+        if u ~= self.selectedUnit then self:selectUnit(u) end
     end
-    if u ~= self.selectedUnit then self:selectUnit(u) end
 end
