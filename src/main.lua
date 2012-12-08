@@ -34,6 +34,10 @@ end
 function love.load()
     math.randomseed(os.time())
 
+    if not debug then
+        love.mouse.setGrab(true)
+    end
+
     -- load images
     resources:addImage("stackling", "stackling.png")
     --resources:addImage("room", "room.png")
@@ -69,6 +73,14 @@ function love.keypressed(k, u)
     if k == "d" and debug then
         debugDraw = not debugDraw
     end
+
+    if k == "tab" and love.keyboard.isDown("lalt") then
+        love.mouse.setGrab(false)
+    end
+end
+
+function love.mousepressed(x, y, button)
+    love.mouse.setGrab(true)
 end
 
 function love.quit()

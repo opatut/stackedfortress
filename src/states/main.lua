@@ -15,9 +15,9 @@ function MainState:__init()
                 self.menu:hide(function() stack:pop() end)
             elseif number == 4 then
                 if debug then 
-                    stack:pop() stack:pop()
+                    stack:quit()
                 else
-                    self.menu:hide(function() stack:pop() stack:pop() end)
+                    self.menu:hide(function() stack:quit() end)
                 end
             end
         end)
@@ -79,8 +79,7 @@ function MainState:keypressed(k, u)
     end
 
     if k == "q" then
-        stack:pop()
-        stack:pop()
+        stack:quit()
     end
 
     if k == "f" then 
