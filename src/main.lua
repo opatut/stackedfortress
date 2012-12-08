@@ -3,13 +3,17 @@ require("core/resources")
 require("states/intro")
 require("states/menu")
 require("states/main")
+require("core/i18n")
 
 resources = Resources("data/")
 settings = Settings()
 settings:load()
 stack = GameStack()
+lang = Lang("en_US")
 
-debug = true
+function _(key) return lang:_(key) end
+
+debug = false
 debugDraw = false
 
 function reset()
@@ -45,7 +49,6 @@ function love.load()
     -- resources:addMusic("fanfare", "fanfare.mp3")
 
     resources:load()
-
     reset()
 end
 

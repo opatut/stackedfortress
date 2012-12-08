@@ -1,11 +1,15 @@
 l = {}
 
 -- main menu
-l.play      = "Play"
-l.language  = "Language"
-l.stats     = "Stats"
-l.about     = "About"
-l.quit      = "Quit"
+l.fortress     = "Fortress"
+l.stack        = "Stack"
+
+l.newGame      = "New Game"
+l.loadGame     = "Load Game"
+l.multiplayer  = "Multiplayer"
+l.options      = "Options"
+l.credits      = "Credits"
+l.exit         = "Exit"
 
 l.your_task = "Your task"
 l.your_tools= "Your tools"
@@ -13,8 +17,6 @@ l.your_goal = "Your goal"
 l.task      = "Help the aliens keep up their diet"
 l.tools     = "Powerful spells and common English words"
 l.goal      = "The cake is a lie, but we got Pie!"
-
-l.keyboard_hints = {"Minimalist.", "Who needs a mouse here?", "Y U NO KEYBOARD?", "I like this *TYPE* of game!", "It's all under your fingertips..."}
 
 -- pause menu
 l.continue  = "Continue"
