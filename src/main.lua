@@ -11,6 +11,7 @@ settings:load()
 stack = GameStack()
 
 lang = Lang("de_DE")
+fullscreen = false
 
 function _(key) return lang:_(key) end
 
@@ -76,7 +77,20 @@ function love.keypressed(k, u)
         love.mouse.setGrab(false)
         return
     end
+    if k == "f11" then  --toggels fullscreen
+        if not fullscreen then
+            -- save old window size
+            windowedSizeX, windowedSizeY = love.graphics.getMode()
 
+            modes = love.graphics.getModes()
+            table.sort(modes, function(a, b) return a.width*a.height < b.width*b.height end) 
+            local nativeResolution = modes[#modes]
+            love.graphics.setMode(nativeResolution["width"], nativeResolution["height"], true)
+        else 
+            love.graphics.setMode(windowedSizeX, windowedSizeY, false)
+        end
+        fullscreen = not fullscreen
+    end
     stack:keypressed(k, u)
 end
 
