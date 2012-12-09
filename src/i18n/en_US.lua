@@ -11,13 +11,11 @@ l.options      = "Options"
 l.credits      = "Credits"
 l.exit         = "Exit"
 
-l.your_task = "Your task"
-l.your_tools= "Your tools"
-l.your_goal = "Your goal"
-l.task      = "Help the aliens keep up their diet"
-l.tools     = "Powerful spells and common English words"
-l.goal      = "The cake is a lie, but we got Pie!"
+--options menu
+l.on           = "on"
+l.off          = "off"
 
+l.language     = "Language"
 -- pause menu
 l.continue  = "Continue"
 l.main_menu = "Main Menu"
