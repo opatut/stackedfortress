@@ -19,6 +19,17 @@ function class(name, superclass)
 end
 ]]--
 
+function math.round(num, decs)
+    decs = decs or 0
+    num = num * (10 ^ decs)
+    local rem = num % 1
+    num = num - rem
+    if rem >= 0.5 then
+        num = num + 1
+    end
+    return num / (10 ^ decs)
+end
+
 function dist(x1, y1, x2, y2)
     return math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
 end

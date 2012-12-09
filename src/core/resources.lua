@@ -13,6 +13,7 @@ function Resources:__init(prefix)
     self.images = {}
     self.music = {}
     self.fonts = {}
+    self.shaders = {}
 end
 
 function Resources:addFont(name, src, size)
@@ -25,6 +26,10 @@ end
 
 function Resources:addMusic(name, src)
     self.musicQueue[name] = src
+end
+
+function Resources:addShader(name, source)
+    self.shaders[name] = love.graphics.newPixelEffect(source)
 end
 
 function Resources:makeGradientImage(name, from, to, horizontal)

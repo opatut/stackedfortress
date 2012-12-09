@@ -42,7 +42,7 @@ function love.load()
 
     -- load images
     resources:addImage("stackling", "stackling.png")
-    --resources:addImage("room", "room.png")
+    resources:addImage("arrow", "arrow.png")
     resources:makeGradientImage("room", {30, 30, 30}, {57, 57, 57})
     resources:makeGradientImage("sky", {220, 230, 255}, {120, 160, 255})
     resources:makeGradientImage("door", {100, 100, 100}, {150, 150, 150}, true)
@@ -55,6 +55,17 @@ function love.load()
 
     -- load music
     -- resources:addMusic("fanfare", "fanfare.mp3")
+
+    resources:addShader("arrow", [[
+        extern number time;
+        vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 pixel_coords)
+        {
+            float a = 0.05;
+            float x = (clamp(sin((texture_coords.y + texture_coords.x) * 0.8 - time * 3), 1 - a, 1) - 1 + a) / a;
+            vec4 c = texture2D(texture, texture_coords) * color;
+            return vec4(mix(c.rgb, vec3(1, 1, 1), x * 0.5), mix(c.a, 1, x * 0.5) * texture2D(texture, texture_coords).a);
+        }
+    ]])
 
     resources:load()
     reset()
@@ -84,10 +95,10 @@ function love.keypressed(k, u)
             windowedSizeX, windowedSizeY = love.graphics.getMode()
 
             modes = love.graphics.getModes()
-            table.sort(modes, function(a, b) return a.width*a.height < b.width*b.height end) 
+            table.sort(modes, function(a, b) return a.width*a.height < b.width*b.height end)
             local nativeResolution = modes[#modes]
             love.graphics.setMode(nativeResolution["width"], nativeResolution["height"], true)
-        else 
+        else
             love.graphics.setMode(windowedSizeX, windowedSizeY, false)
         end
         fullscreen = not fullscreen
