@@ -25,7 +25,7 @@ function MenuState:__init()
             end
         end)
 
-    self.options = Menu({"Debug: " .. (debug and "on" or "off"), _("language") .. " " .. (savedLanguage), "Back"},
+    self.options = Menu({"Debug: " .. (debug and "on" or "off"), _("language") .. ": " .. (savedLanguage), "Back"},
         function(number, text)
             if number == 1 then
                 debug = not debug
@@ -36,7 +36,7 @@ function MenuState:__init()
                 else
                     savedLanguage = "de_DE"
                 end
-                self.options.entries[2] = _("language") .. " " .. (savedLanguage)
+                self.options.entries[2] = _("language") .. ": " .. (savedLanguage)
             elseif number == 3 then
                 self.options:hide(function() self.menu:show() end)
             end
