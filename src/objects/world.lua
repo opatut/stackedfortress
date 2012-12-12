@@ -31,8 +31,8 @@ function World:getZoom()
 end
 
 function World:getOffset()
-    return 
-        love.graphics.getWidth() / 2      - self.centerX * self:getZoom(), 
+    return
+        love.graphics.getWidth() / 2      - self.centerX * self:getZoom(),
         love.graphics.getHeight() * 4 / 5 - self.centerY * self:getZoom()
 end
 
@@ -44,7 +44,7 @@ end
 
 function World:shift(x, y)
     self.centerX = self.centerX + x
-    self.centerY = self.centerY + y    
+    self.centerY = self.centerY + y
 end
 
 function World:pushTransform()
@@ -61,7 +61,10 @@ function World:draw()
     love.graphics.setBackgroundColor(120, 160, 255) -- blue sky
 
     love.graphics.setColor(255, 255, 255)
+    love.graphics.setPixelEffect(resources.shaders.sky)
+    resources.shaders.sky:send("daytime", math.sin(( (self.time + 3) / 20) % 1 * math.pi * 2 - math.pi) * 0.5 + 0.5)
     love.graphics.draw(resources.images.sky, 0, 0, 0, love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
+    love.graphics.setPixelEffect()
 
     self:pushTransform()
 

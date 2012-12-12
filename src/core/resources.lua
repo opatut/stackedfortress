@@ -9,6 +9,7 @@ function Resources:__init(prefix)
     self.imageQueue = {}
     self.musicQueue = {}
     self.fontQueue = {}
+    self.shaderQueue = {}
 
     self.images = {}
     self.music = {}
@@ -28,7 +29,11 @@ function Resources:addMusic(name, src)
     self.musicQueue[name] = src
 end
 
-function Resources:addShader(name, source)
+function Resources:addShader(name, src)
+    self.shaderQueue[name] = src
+end
+
+function Resources:createShader(name, source)
     self.shaders[name] = love.graphics.newPixelEffect(source)
 end
 
@@ -55,5 +60,14 @@ function Resources:load(threaded)
     for name, src in pairs(self.musicQueue) do
         self.music[name] = love.audio.newSource(self.prefix .. src)
         self.musicQueue[name] = nil
+    end
+
+    for name, src in pairs(self.shaderQueue) do
+        content = ""
+        for line in love.filesystem.lines(self.prefix .. src) do
+            content = content .. line .. "\n"
+        end
+        self:createShader(name, content)
+        self.shaderQueue[name] = nil
     end
 end

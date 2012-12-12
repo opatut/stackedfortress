@@ -14,7 +14,7 @@ function MainState:__init()
             elseif number == 3 then
                 self.menu:hide(function() stack:pop() end)
             elseif number == 4 then
-                if debug then 
+                if debug then
                     stack:quit()
                 else
                     self.menu:hide(function() stack:quit() end)
@@ -66,9 +66,16 @@ function MainState:draw()
         if self.buildModeSize[1] % 2 == 0 then
             -- even width, add 0.5
             wX = wX + 0.5
-
         end
         wY = 0
+
+        for i, room in pairs(self.world:ofType("Room")) do
+            if math.abs(wX - room.x) < (self.buildModeSize[1] + room.w) * 0.5 then
+                if wY > room.y - room.h then
+                    wY = room.y - room.h
+                end
+            end
+        end
 
         self.buildModePos = {wX, wY}
 
@@ -157,7 +164,7 @@ function MainState:keypressed(k, u)
         stack:quit()
     end
 
-    if k == "f" then 
+    if k == "f" then
         -- take the first and last node and find the path
         -- print the length
         local path = self.world.navmesh[1]:findPath(self.world.navmesh[#self.world.navmesh])
@@ -182,7 +189,7 @@ function MainState:selectUnit(unit)
     if unit == self.selectedUnit then return end
 
     if self.selectedUnit then
-        if self.selectedUnit.onDeselect then 
+        if self.selectedUnit.onDeselect then
             self.selectedUnit:onDeselect()
         end
         self.selectedUnit.selected = false
@@ -191,7 +198,7 @@ function MainState:selectUnit(unit)
     self.selectedUnit = unit
 
     if self.selectedUnit then
-        if self.selectedUnit.onSelect then 
+        if self.selectedUnit.onSelect then
             self.selectedUnit:onSelect()
         end
         self.selectedUnit.selected = true
@@ -218,7 +225,7 @@ function MainState:mousepressed(x, y, button)
         if self.buildModeSize then
             if button == "l" then
                 -- build and end
-                self.world:add(Room(self.buildModePos[1], self.buildModePos[2], 
+                self.world:add(Room(self.buildModePos[1], self.buildModePos[2],
                     self.buildModeSize[1], self.buildModeSize[2]))
                 self.buildModeSize = nil
             elseif button == "wu" then
