@@ -58,7 +58,7 @@ function World:popTransform()
 end
 
 function World:draw()
-    local daytime = (self.time / 20) % 1
+    local daytime = (self.time / 240 + 0.3) % 1
     local daytimeShader = math.sin(daytime * math.pi * 2 - math.pi * 0.5) * 0.5 + 0.5
 
     love.graphics.setBackgroundColor(120, 160, 255) -- blue sky
