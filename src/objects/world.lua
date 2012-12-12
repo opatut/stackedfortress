@@ -58,20 +58,31 @@ function World:popTransform()
 end
 
 function World:draw()
+    local daytime = (self.time / 20) % 1
+    local daytimeShader = math.sin(daytime * math.pi * 2 - math.pi * 0.5) * 0.5 + 0.5
+
     love.graphics.setBackgroundColor(120, 160, 255) -- blue sky
 
     love.graphics.setColor(255, 255, 255)
     love.graphics.setPixelEffect(resources.shaders.sky)
-    resources.shaders.sky:send("daytime", math.sin(( (self.time + 3) / 20) % 1 * math.pi * 2 - math.pi) * 0.5 + 0.5)
+    resources.shaders.sky:send("daytime", daytimeShader)
     love.graphics.draw(resources.images.sky, 0, 0, 0, love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
     love.graphics.setPixelEffect()
 
     self:pushTransform()
 
+    -- draw sun/moon
+    local hX = self.centerX
+    local r = 17  --  - love.graphics.getHeight() * 0.4 / self:getZoom() + self.centerY
+    local x, y = math.sin(- daytime * math.pi * 2) * r, math.cos(- daytime * math.pi * 2) * r
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.draw(resources.images.sun, x + hX, y, 0, 0.02, 0.02, 128, 128)
+    love.graphics.draw(resources.images.moon, -x + hX, -y, 0, 0.02, 0.02, 128, 128)
+
     -- draw ground
     love.graphics.setColor(166, 80, 43)
     local w = love.graphics.getWidth() / self:getZoom()
-    love.graphics.rectangle("fill", -w / 2, 0, w, 5)
+    love.graphics.rectangle("fill", -w / 2 + hX, 0, w, self.centerY + love.graphics.getHeight() * 4 / 5 / self:getZoom())
 
     ObjectGroup.draw(self)
 
