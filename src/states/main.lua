@@ -3,6 +3,8 @@
 require("core/gamestate")
 require("core/resources")
 require("objects/world")
+require("gui/widget")
+require("gui/button")
 
 MainState = class("MainState", GameState)
 
@@ -30,12 +32,23 @@ function MainState:__init()
 
     self.buildModeSize = nil
     self.buildModePos = {0, 0}
+
+    self.gui = Widget()
+    self.gui.x = 200
+    local button = Button()
+    button.width = 20
+    button.height = 20
+    self.gui:addChild(button)
 end
 
 function MainState:reset()
 end
 
 function MainState:update(dt)
+    self.gui.width = love.graphics.getWidth()
+    self.gui.height = love.graphics.getHeight()
+    self.gui:update(dt)
+
     self.menu:update(dt)
 
     if self.running then
@@ -109,6 +122,8 @@ function MainState:draw()
             love.graphics.print("[B] Build a new room", 10, 85)
         end
     end
+
+    self.gui:draw() -- draw the gui
 
     -- PAUSE MENU
     if self.menu:isVisible() then
