@@ -58,14 +58,14 @@ function World:popTransform()
 end
 
 function World:draw()
-    local daytime = (self.time / 240 + 0.3) % 1
+    local daytime = (self.time / 20 + 0.3) % 1
     local daytimeShader = math.sin(daytime * math.pi * 2 - math.pi * 0.5) * 0.5 + 0.5
 
     love.graphics.setBackgroundColor(30, 30, 30)
 
     love.graphics.setColor(255, 255, 255)
     love.graphics.setPixelEffect(resources.shaders.sky)
-    resources.shaders.sky:send("daytime", daytimeShader)
+    resources:sendShaderValue("sky", "daytime", daytimeShader)
     love.graphics.draw(resources.images.sky, 0, 0, 0, love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
     love.graphics.setPixelEffect()
 

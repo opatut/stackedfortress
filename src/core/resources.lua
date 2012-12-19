@@ -34,7 +34,17 @@ function Resources:addShader(name, src)
 end
 
 function Resources:createShader(name, source)
-    self.shaders[name] = love.graphics.newPixelEffect(source)
+    if love.graphics.isSupported("pixeleffect") then
+        self.shaders[name] = love.graphics.newPixelEffect(source)
+    else
+        self.shaders[name] = nil
+    end
+end
+
+function Resources:sendShaderValue(name, key, value)
+    if love.graphics.isSupported("pixeleffect") then
+        self.shaders[name]:send(key, value)
+    end
 end
 
 function Resources:makeGradientImage(name, from, to, horizontal)

@@ -84,7 +84,7 @@ function MainState:draw()
         love.graphics.rectangle("fill", wX - self.buildModeSize[1] / 2, wY - self.buildModeSize[2], self.buildModeSize[1], self.buildModeSize[2])
 
         -- draw the arrow above
-        resources.shaders.arrow:send("time", self.world.time)
+        resources:sendShaderValue("arrow", "time", self.world.time)
         love.graphics.setPixelEffect(resources.shaders.arrow)
         love.graphics.setColor(255, 255, 255, 100)
         local s = math.abs(math.sin(5 * self.world.time))
