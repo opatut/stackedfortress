@@ -10,8 +10,7 @@ settings = Settings()
 settings:load()
 stack = GameStack()
 
-savedLanguage = settings:get("language", "de_DE")
-lang = Lang(savedLanguage) --"de_DE" or "en_US"
+lang = Lang(settings:get("language", "de_DE")) --"de_DE" or "en_US"
 fullscreen = false
 
 function _(key) return lang:_(key) end
@@ -20,6 +19,8 @@ debug = settings:get("debug", false)
 debugDraw = false
 
 function reset()
+    stack:quit() -- clear the stack
+
     -- start game
     menu = MenuState()
     main = MainState()
@@ -42,7 +43,9 @@ function love.load()
 
     -- load images
     resources:addImage("stackling", "stackling.png")
-    --resources:addImage("room", "room.png")
+    resources:addImage("arrow", "arrow.png")
+    resources:addImage("sun", "sun.png")
+    resources:addImage("moon", "moon.png")
     resources:makeGradientImage("room", {30, 30, 30}, {57, 57, 57})
     resources:makeGradientImage("sky", {220, 230, 255}, {120, 160, 255})
     resources:makeGradientImage("door", {100, 100, 100}, {150, 150, 150}, true)
@@ -55,6 +58,8 @@ function love.load()
 
     -- load music
     -- resources:addMusic("fanfare", "fanfare.mp3")
+    resources:addShader("arrow", "shaders/arrow.glsl")
+    resources:addShader("sky", "shaders/daylight.glsl")
 
     resources:load()
     reset()
@@ -84,10 +89,10 @@ function love.keypressed(k, u)
             windowedSizeX, windowedSizeY = love.graphics.getMode()
 
             modes = love.graphics.getModes()
-            table.sort(modes, function(a, b) return a.width*a.height < b.width*b.height end) 
+            table.sort(modes, function(a, b) return a.width*a.height < b.width*b.height end)
             local nativeResolution = modes[#modes]
             love.graphics.setMode(nativeResolution["width"], nativeResolution["height"], true)
-        else 
+        else
             love.graphics.setMode(windowedSizeX, windowedSizeY, false)
         end
         fullscreen = not fullscreen
@@ -110,6 +115,5 @@ end
 
 function love.quit()
     settings:set("debug", debug)
-    settings:set("language", savedLanguage)
     settings:save()
 end

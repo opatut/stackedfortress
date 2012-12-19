@@ -11,8 +11,8 @@ function World:__init()
     self.navmesh = {}
 
     self:add(Stackling())
-    self:add(Room(0, 0, 2, 2))
-    self:add(Room(2, 0, 2, 1))
+    self:add(Room(-1.5, 0, 2, 2))
+    self:add(Room(0.5, 0, 2, 1))
     --self:add(Room(2, -1, 2, 1))
 
     self.time = 0
@@ -31,8 +31,8 @@ function World:getZoom()
 end
 
 function World:getOffset()
-    return 
-        love.graphics.getWidth() / 2      - self.centerX * self:getZoom(), 
+    return
+        love.graphics.getWidth() / 2      - self.centerX * self:getZoom(),
         love.graphics.getHeight() * 4 / 5 - self.centerY * self:getZoom()
 end
 
@@ -44,7 +44,7 @@ end
 
 function World:shift(x, y)
     self.centerX = self.centerX + x
-    self.centerY = self.centerY + y    
+    self.centerY = self.centerY + y
 end
 
 function World:pushTransform()
@@ -58,17 +58,31 @@ function World:popTransform()
 end
 
 function World:draw()
-    love.graphics.setBackgroundColor(120, 160, 255) -- blue sky
+    local daytime = (self.time / 20 + 0.3) % 1
+    local daytimeShader = math.sin(daytime * math.pi * 2 - math.pi * 0.5) * 0.5 + 0.5
+
+    love.graphics.setBackgroundColor(30, 30, 30)
 
     love.graphics.setColor(255, 255, 255)
+    love.graphics.setPixelEffect(resources.shaders.sky)
+    resources:sendShaderValue("sky", "daytime", daytimeShader)
     love.graphics.draw(resources.images.sky, 0, 0, 0, love.graphics.getWidth() / 2, love.graphics.getHeight() / 2)
+    love.graphics.setPixelEffect()
 
     self:pushTransform()
+
+    -- draw sun/moon
+    local hX = self.centerX
+    local r = 17  --  - love.graphics.getHeight() * 0.4 / self:getZoom() + self.centerY
+    local x, y = math.sin(- daytime * math.pi * 2) * r, math.cos(- daytime * math.pi * 2) * r
+    love.graphics.setColor(255, 255, 255)
+    love.graphics.draw(resources.images.sun, x + hX, y, 0, 0.02, 0.02, 128, 128)
+    love.graphics.draw(resources.images.moon, -x + hX, -y, 0, 0.02, 0.02, 128, 128)
 
     -- draw ground
     love.graphics.setColor(166, 80, 43)
     local w = love.graphics.getWidth() / self:getZoom()
-    love.graphics.rectangle("fill", -w / 2, 0, w, 5)
+    love.graphics.rectangle("fill", -w / 2 + hX, 0, w, self.centerY + love.graphics.getHeight() * 4 / 5 / self:getZoom())
 
     ObjectGroup.draw(self)
 

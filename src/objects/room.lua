@@ -88,13 +88,13 @@ function Room:onAdd(group)
     for k, v in pairs(group:ofType("Room")) do
         if v ~= self and v.y == self.y then
             -- same level
-            if v.x + v.w == self.x then
+            if v.x + v.w / 2 == self.x - self.w / 2 then
                 -- left of this
                 self.leftNode:connect(v.rightNode)
                 self:addDoor(Door(self, v))
             end
 
-            if self.x + self.w == v.x then
+            if self.x + self.w / 2 == v.x - v.w / 2 then
                 -- right of this
                 self.rightNode:connect(v.leftNode)
                 self:addDoor(Door(self, v))

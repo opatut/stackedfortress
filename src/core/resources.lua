@@ -9,10 +9,12 @@ function Resources:__init(prefix)
     self.imageQueue = {}
     self.musicQueue = {}
     self.fontQueue = {}
+    self.shaderQueue = {}
 
     self.images = {}
     self.music = {}
     self.fonts = {}
+    self.shaders = {}
 end
 
 function Resources:addFont(name, src, size)
@@ -25,6 +27,24 @@ end
 
 function Resources:addMusic(name, src)
     self.musicQueue[name] = src
+end
+
+function Resources:addShader(name, src)
+    self.shaderQueue[name] = src
+end
+
+function Resources:createShader(name, source)
+    if love.graphics.isSupported("pixeleffect") then
+        self.shaders[name] = love.graphics.newPixelEffect(source)
+    else
+        self.shaders[name] = nil
+    end
+end
+
+function Resources:sendShaderValue(name, key, value)
+    if love.graphics.isSupported("pixeleffect") then
+        self.shaders[name]:send(key, value)
+    end
 end
 
 function Resources:makeGradientImage(name, from, to, horizontal)
@@ -50,5 +70,14 @@ function Resources:load(threaded)
     for name, src in pairs(self.musicQueue) do
         self.music[name] = love.audio.newSource(self.prefix .. src)
         self.musicQueue[name] = nil
+    end
+
+    for name, src in pairs(self.shaderQueue) do
+        content = ""
+        for line in love.filesystem.lines(self.prefix .. src) do
+            content = content .. line .. "\n"
+        end
+        self:createShader(name, content)
+        self.shaderQueue[name] = nil
     end
 end
