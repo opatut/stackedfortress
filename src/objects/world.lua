@@ -61,7 +61,7 @@ function World:draw()
     local daytime = (self.time / 240 + 0.3) % 1
     local daytimeShader = math.sin(daytime * math.pi * 2 - math.pi * 0.5) * 0.5 + 0.5
 
-    love.graphics.setBackgroundColor(120, 160, 255) -- blue sky
+    love.graphics.setBackgroundColor(30, 30, 30)
 
     love.graphics.setColor(255, 255, 255)
     love.graphics.setPixelEffect(resources.shaders.sky)

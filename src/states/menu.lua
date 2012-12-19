@@ -11,6 +11,8 @@ MenuState = class("MenuState", GameState)
 
 function MenuState:__init()
     self.time = 0
+    self.languageBeforeOptions = lang.currentLanguage
+
     self.menu = Menu({_("newGame"), _("loadGame"), _("multiplayer"), _("options"), _("credits"), _("exit")},
         function(number, text)
             if number == 1 then
@@ -25,20 +27,29 @@ function MenuState:__init()
             end
         end)
 
-    self.options = Menu({"Debug: " .. (debug and "on" or "off"), _("language") .. " " .. (savedLanguage), "Back"},
+    self.options = Menu({"Debug: " .. (debug and "on" or "off"), _("language") .. " " .. lang.currentLanguage, "Back"},
         function(number, text)
             if number == 1 then
                 debug = not debug
                 self.options.entries[1] = "Debug: " .. (debug and "on" or "off")
             elseif number == 2 then
-                if savedLanguage == "de_DE" then
-                    savedLanguage = "en_US"
-                else
-                    savedLanguage = "de_DE"
-                end
-                self.options.entries[2] = _("language") .. " " .. (savedLanguage)
+                local langs = lang:getAvailableLanguages()
+                local i = table.getKey(langs, lang.currentLanguage)
+                i = i + 1
+                if i > #langs then i = 1 end
+                lang:setLanguage(langs[i])
+                self.options.entries[2] = _("language") .. " " .. lang.currentLanguage
             elseif number == 3 then
-                self.options:hide(function() self.menu:show() end)
+                self.options:hide(function()
+                    if self.languageBeforeOptions ~= lang.currentLanguage then
+                        -- reload everything
+                        reset()
+                        -- reset the stack
+                        stack:quit()
+                        stack:push(menu)
+                    end
+                    self.menu:show()
+                end)
             end
         end)
 end

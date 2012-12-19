@@ -10,8 +10,7 @@ settings = Settings()
 settings:load()
 stack = GameStack()
 
-savedLanguage = settings:get("language", "de_DE")
-lang = Lang(savedLanguage) --"de_DE" or "en_US"
+lang = Lang(settings:get("language", "de_DE")) --"de_DE" or "en_US"
 fullscreen = false
 
 function _(key) return lang:_(key) end
@@ -20,6 +19,8 @@ debug = settings:get("debug", false)
 debugDraw = false
 
 function reset()
+    stack:quit() -- clear the stack
+
     -- start game
     menu = MenuState()
     main = MainState()
@@ -114,6 +115,5 @@ end
 
 function love.quit()
     settings:set("debug", debug)
-    settings:set("language", savedLanguage)
     settings:save()
 end

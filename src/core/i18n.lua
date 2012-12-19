@@ -36,6 +36,14 @@ function Lang:scan()
     end
 end
 
+function Lang:getAvailableLanguages()
+    local tmp = {}
+    for name, file in pairs(self.available) do
+        table.insert(tmp, name)
+    end
+    return tmp
+end
+
 function Lang:load(lang)
     ok, chunk = pcall(love.filesystem.load, self.available[lang])
     if not ok then return false end
