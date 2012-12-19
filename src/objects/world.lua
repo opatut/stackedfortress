@@ -2,6 +2,7 @@ require("core/objectgroup")
 require("core/navmesh")
 require("objects/stackling")
 require("objects/room")
+require("objects/cannon")
 
 World = class("World", ObjectGroup)
 
@@ -11,9 +12,11 @@ function World:__init()
     self.navmesh = {}
 
     self:add(Stackling())
-    self:add(Room(-1.5, 0, 2, 2))
-    self:add(Room(0.5, 0, 2, 1))
-    --self:add(Room(2, -1, 2, 1))
+    room1 = Room(-1.5, 0, 2, 2)
+    room2 = Room(0.5, 0, 2, 1)
+    self:add(room1)
+    self:add(room2)
+    self:add(Cannon(room1))
 
     self.time = 0
     self.centerX = 0

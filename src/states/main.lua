@@ -103,6 +103,27 @@ function MainState:draw()
         love.graphics.setPixelEffect()
     end
 
+    if self.mode == "build" and self.placeType == "cannon" then
+        local wX, wY = self.world:screenToWorld(love.mouse.getPosition())
+        wX = math.round(wX)
+        wY = math.round(wY)
+
+        local ok = false
+
+        for i, room in pairs(self.world:ofType("Room")) do
+            if math.abs(wX - room.x) == 1.5 and
+               math.abs(wY + (room.y + room.h)) > room.y then
+                ok = true
+            end
+        end
+
+        if ok then
+            -- draw a room rectangle at the position
+            love.graphics.setColor(0, 255, 0, 128)
+            love.graphics.rectangle("fill", wX + 0.5, wY, 1, 1)
+        end
+    end
+
     self.world:popTransform()
 
     love.graphics.setColor(0, 0, 0)
@@ -118,6 +139,7 @@ function MainState:draw()
             love.graphics.print("[Scroll] Change room size <" .. self.buildModeSize[1] .. "x" .. self.buildModeSize[2] .. ">", 10, 85)
         else
             love.graphics.print("[B] Build a new room", 10, 85)
+            love.graphics.print("[C] Place a cannon", 10, 110)
         end
     end
 
@@ -170,6 +192,14 @@ function MainState:keypressed(k, u)
             self.buildModeSize = nil
         else
             self.buildModeSize = {1, 1}
+        end
+    end
+
+    if k == "c" and self.mode == "build" then
+        if self.placeType then
+            self.placeType = nil
+        else
+            self.placeType = "cannon"
         end
     end
 
