@@ -12,8 +12,9 @@ function Widget:__init(x, y)
 
     self.parent = nil
     self.children = {}
-    self.active = false
-    self.visible = true	
+    self.active = false     -- pressed etc.
+    self.hover = false      -- mouse over element
+    self.visible = true     -- being rendered
 end
 
 function Widget:absolutePosition()
@@ -26,20 +27,21 @@ function Widget:absolutePosition()
 end
 
 function Widget:isHover()
+    if not self.visible then return false end
+
     local x, y = love.mouse.getPosition()
     if self.parent then
         local px, py = self.parent:absolutePosition()
         x = x - px
         y = y - py
     end
-    return x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height 
+    return x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height
 end
 
 function Widget:clickEvent(x, y)
-    if not self:isHover() then 
-        -- outside widget area 
-        return false
-    end
+    if not self.visible then return false end
+    if not self:isHover() then return false end
+
     for k, v in pairs(self.children) do
         if v:clickEvent(x - self.x, y - self.y) then
             return true
@@ -47,14 +49,14 @@ function Widget:clickEvent(x, y)
     end
 
     if self.onClick then
-        self:onClick()
+        self.active = true
         return true
     end
 
     return false
 end
 
-function Widget:draw() 
+function Widget:draw()
     if self.visible then
         self:onDraw()
 
@@ -76,6 +78,14 @@ end
 function Widget:onDraw() end
 
 function Widget:update(dt)
+    self.hover = self:isHover()
+    if self.active and not love.mouse.isDown("l") then
+        self.active = false
+        if self.hover then
+            self:onClick() -- when releasing and still over it, trigger the click
+        end
+    end
+
     self:onUpdate(dt)
     for k, v in pairs(self.children) do
         v:update(dt)

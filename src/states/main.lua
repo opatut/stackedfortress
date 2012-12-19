@@ -34,7 +34,9 @@ function MainState:__init()
     self.buildModePos = {0, 0}
 
     self.gui = Widget()
-    self.gui:addChild(Button("Test", 10, 200))
+    local button = Button("Test", 10, 200)
+    button:setOnClickCallback(function() print("Test button clicked!") end)
+    self.gui:addChild(button)
 end
 
 function MainState:reset()
