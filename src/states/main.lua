@@ -34,11 +34,7 @@ function MainState:__init()
     self.buildModePos = {0, 0}
 
     self.gui = Widget()
-    self.gui.x = 200
-    local button = Button()
-    button.width = 20
-    button.height = 20
-    self.gui:addChild(button)
+    self.gui:addChild(Button("Test", 10, 200))
 end
 
 function MainState:reset()

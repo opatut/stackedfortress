@@ -2,9 +2,9 @@ require("core/helper")
 
 Widget = class("Widget")
 
-function Widget:__init()
-    self.x = 0
-    self.y = 0
+function Widget:__init(x, y)
+    self.x = x and x or 100
+    self.y = y and y or 100
     self.width = 0
     self.height = 0
 
