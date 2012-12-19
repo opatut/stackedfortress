@@ -217,6 +217,9 @@ function MainState:selectUnit(unit)
 end
 
 function MainState:mousepressed(x, y, button)
+    -- Foward to gui
+    if button == "l" and self.gui:clickEvent(x, y) then return end
+
     -- transform coordinates
     local wX, wY = self.world:screenToWorld(x, y)
 

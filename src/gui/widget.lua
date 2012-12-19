@@ -3,8 +3,8 @@ require("core/helper")
 Widget = class("Widget")
 
 function Widget:__init(x, y)
-    self.x = x and x or 100
-    self.y = y and y or 100
+    self.x = x and x or 0
+    self.y = y and y or 0
     self.width = 0
     self.height = 0
 
@@ -14,6 +14,25 @@ function Widget:__init(x, y)
     self.hover = false
     self.active = false
     self.visible = true	
+end
+
+function Widget:clickEvent(x, y)
+    if x < self.x or x > self.x + self.width or y < self.y or y > self.y + self.height then 
+        -- outside widget area 
+        return false
+    end
+    for k, v in pairs(self.children) do
+        if v:clickEvent(x - self.x, y - self.y) then
+            return true
+        end
+    end
+
+    if self.onClick then
+        self:onClick()
+        return true
+    end
+
+    return false
 end
 
 function Widget:draw() 

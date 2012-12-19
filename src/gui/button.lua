@@ -17,3 +17,7 @@ function Button:onDraw()
 end
 
 function Button:onUpdate(dt) end
+
+function Button:onClick()
+    print(self.text)
+end
