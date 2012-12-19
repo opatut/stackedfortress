@@ -10,8 +10,14 @@ function Button:__init(text, x, y)
 end
 
 function Button:onDraw()
-    love.graphics.setColor(255, 255, 255)
+    if not self:isHover() then
+        love.graphics.setColor(200, 200, 255)
+    else
+        love.graphics.setColor(255, 255, 255)
+    end
     love.graphics.draw(resources.images.button, self.x, self.y, 0, 0.01 * self.width, 0.01 * self.height)
+
+    love.graphics.setColor(255, 255, 255)
     love.graphics.print(self.text, self.x + self.width / 2 - love.graphics.getFont():getWidth(self.text) / 2, 
         self.y + self.height / 2 - love.graphics.getFont():getHeight() / 2)
 end

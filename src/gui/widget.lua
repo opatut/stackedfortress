@@ -10,14 +10,33 @@ function Widget:__init(x, y)
 
     self.clip = true
 
+    self.parent = nil
     self.children = {}
-    self.hover = false
     self.active = false
     self.visible = true	
 end
 
+function Widget:absolutePosition()
+    if not self.parent then
+        return self.x, self.y
+    else
+        local x, y = self.parent:absolutePosition()
+        return self.x + x, self.y + y
+    end
+end
+
+function Widget:isHover()
+    local x, y = love.mouse.getPosition()
+    if self.parent then
+        local px, py = self.parent:absolutePosition()
+        x = x - px
+        y = y - py
+    end
+    return x >= self.x and x <= self.x + self.width and y >= self.y and y <= self.y + self.height 
+end
+
 function Widget:clickEvent(x, y)
-    if x < self.x or x > self.x + self.width or y < self.y or y > self.y + self.height then 
+    if not self:isHover() then 
         -- outside widget area 
         return false
     end
@@ -66,5 +85,6 @@ end
 function Widget:onUpdate(dt) end
 
 function Widget:addChild(child)
+    child.parent = self
     table.insert(self.children, child)
 end
